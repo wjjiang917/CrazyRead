@@ -11,7 +11,7 @@ import dagger.Provides;
 import me.crazyjiang.crazyread.App;
 import me.crazyjiang.crazyread.BuildConfig;
 import me.crazyjiang.crazyread.common.Constant;
-import me.crazyjiang.crazyread.di.qualifier.ZhiHuUrl;
+import me.crazyjiang.crazyread.di.qualifier.ServiceType;
 import me.crazyjiang.crazyread.model.http.api.ZhiHuApi;
 import me.crazyjiang.crazyread.util.FileUtil;
 import me.crazyjiang.crazyread.util.PhoneUtil;
@@ -45,14 +45,14 @@ public class HttpModule {
 
     @Singleton
     @Provides
-    @ZhiHuUrl
+    @ServiceType("ZhiHu")
     Retrofit provideZhiHuRetrofit(Retrofit.Builder builder, OkHttpClient client) {
         return createRetrofit(builder, client, ZhiHuApi.HOST);
     }
 
     @Singleton
     @Provides
-    ZhiHuApi provideZhiHuService(@ZhiHuUrl Retrofit retrofit) {
+    ZhiHuApi provideZhiHuService(@ServiceType("ZhiHu") Retrofit retrofit) {
         return retrofit.create(ZhiHuApi.class);
     }
 

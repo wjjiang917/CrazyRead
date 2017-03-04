@@ -13,6 +13,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Qualifier
 @Documented
 @Retention(RUNTIME)
-public @interface ZhiHuUrl {
-
+public @interface ServiceType {
+    /**
+     * api service type: "ZhiHu", "Gank"
+     */
+    String value() default "";
 }
