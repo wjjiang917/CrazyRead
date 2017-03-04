@@ -11,7 +11,6 @@ import me.crazyjiang.crazyread.model.bean.WelcomeBean;
 import me.crazyjiang.crazyread.presenter.SplashPresenter;
 import me.crazyjiang.crazyread.presenter.contract.SplashContract;
 import me.crazyjiang.crazyread.util.ImageUtil;
-import me.crazyjiang.crazyread.util.TipUtil;
 
 public class SplashActivity extends BaseActivity<SplashPresenter> implements SplashContract.View {
     @BindView(R.id.iv_welcome_bg)
@@ -43,7 +42,6 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
 
     @Override
     public void jumpToMain() {
-        TipUtil.showToast("Go To Main Page");
     }
 
     @Override
