@@ -1,6 +1,7 @@
 package me.crazyjiang.crazyread.presenter;
 
 import me.crazyjiang.crazyread.common.RxBus;
+import me.crazyjiang.crazyread.model.http.ApiService;
 import me.crazyjiang.crazyread.ui.BaseView;
 import rx.Subscription;
 import rx.functions.Action1;
@@ -13,6 +14,11 @@ import rx.subscriptions.CompositeSubscription;
 public class RxPresenter<T extends BaseView> implements BasePresenter<T> {
     protected T mView;
     protected CompositeSubscription mCompositeSubscription;
+
+    /**
+     * api service
+     */
+    protected ApiService mApiService;
 
     @Override
     public void attachView(T view) {

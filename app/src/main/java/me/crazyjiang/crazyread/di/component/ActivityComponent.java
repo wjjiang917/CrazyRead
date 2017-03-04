@@ -5,7 +5,8 @@ import android.app.Activity;
 import dagger.Component;
 import me.crazyjiang.crazyread.di.module.ActivityModule;
 import me.crazyjiang.crazyread.di.scope.ActivityScope;
-import me.crazyjiang.crazyread.ui.SplashActivity;
+import me.crazyjiang.crazyread.ui.main.activity.MainActivity;
+import me.crazyjiang.crazyread.ui.main.activity.SplashActivity;
 
 /**
  * Created by Jiangwenjin on 2017/2/28.
@@ -16,4 +17,6 @@ public interface ActivityComponent {
     Activity getActivity();
 
     void inject(SplashActivity splashActivity);
+
+    void inject(MainActivity mainActivity);
 }

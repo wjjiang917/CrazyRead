@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import me.crazyjiang.crazyread.common.RxUtil;
-import me.crazyjiang.crazyread.model.bean.WelcomeBean;
+import me.crazyjiang.crazyread.model.bean.StartImageBean;
 import me.crazyjiang.crazyread.model.http.ApiService;
 import me.crazyjiang.crazyread.presenter.contract.SplashContract;
 import rx.Observable;
@@ -19,8 +19,6 @@ public class SplashPresenter extends RxPresenter<SplashContract.View> implements
     private static final String RES = "1080*1776";
     private static final long DELAY = 2000L;
 
-    private ApiService mApiService;
-
     @Inject
     public SplashPresenter(ApiService apiService) {
         this.mApiService = apiService;
@@ -28,12 +26,12 @@ public class SplashPresenter extends RxPresenter<SplashContract.View> implements
 
     @Override
     public void getWelcomeData() {
-        addSubscribe(mApiService.fetchWelcomeInfo(RES)
-                .compose(RxUtil.<WelcomeBean>rxSchedulerHelper())
-                .subscribe(new Action1<WelcomeBean>() {
+        addSubscribe(mApiService.fetchStartImage(RES)
+                .compose(RxUtil.<StartImageBean>rxSchedulerHelper())
+                .subscribe(new Action1<StartImageBean>() {
                     @Override
-                    public void call(WelcomeBean welcomeBean) {
-                        mView.onSuccess(welcomeBean);
+                    public void call(StartImageBean startImageBean) {
+                        mView.onSuccess(startImageBean);
                         startCountDown();
                     }
                 }, new Action1<Throwable>() {

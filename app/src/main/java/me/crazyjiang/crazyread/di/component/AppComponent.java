@@ -8,6 +8,7 @@ import me.crazyjiang.crazyread.di.module.AppModule;
 import me.crazyjiang.crazyread.di.module.HttpModule;
 import me.crazyjiang.crazyread.di.module.PageModule;
 import me.crazyjiang.crazyread.model.http.ApiService;
+import me.crazyjiang.crazyread.ui.zhihu.fragment.ZhiHuFragment;
 
 /**
  * Created by Jiangwenjin on 2017/2/28.
@@ -18,4 +19,6 @@ public interface AppComponent {
     App getContext();
 
     ApiService apiService();
+
+    ZhiHuFragment zhiHuFragment();
 }

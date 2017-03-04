@@ -2,9 +2,9 @@ package me.crazyjiang.crazyread.model.bean;
 
 /**
  * Created by Jiangwenjin on 2017/2/28.
+ * ZhiHu welcome picture information
  */
-
-public class WelcomeBean {
+public class StartImageBean {
     private String text;
     private String img;
 

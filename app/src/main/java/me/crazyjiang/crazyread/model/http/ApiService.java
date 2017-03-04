@@ -1,6 +1,7 @@
 package me.crazyjiang.crazyread.model.http;
 
-import me.crazyjiang.crazyread.model.bean.WelcomeBean;
+import me.crazyjiang.crazyread.model.bean.DailyStoriesBean;
+import me.crazyjiang.crazyread.model.bean.StartImageBean;
 import me.crazyjiang.crazyread.model.http.api.ZhiHuApi;
 import rx.Observable;
 
@@ -15,7 +16,11 @@ public class ApiService {
         this.mZhiHuApiService = api;
     }
 
-    public Observable<WelcomeBean> fetchWelcomeInfo(String res) {
-        return mZhiHuApiService.getWelcomeInfo(res);
+    public Observable<StartImageBean> fetchStartImage(String res) {
+        return mZhiHuApiService.getStartImage(res);
+    }
+
+    public Observable<DailyStoriesBean> fetchLatestNews() {
+        return mZhiHuApiService.getLatestNews();
     }
 }
