@@ -9,7 +9,7 @@ import rx.Observable;
  * Created by Jiangwenjin on 2017/2/28.
  */
 
-public interface ZhihuApis {
+public interface ZhiHuApi {
     String HOST = "http://news-at.zhihu.com/api/4/";
 
     /**

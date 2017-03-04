@@ -12,7 +12,7 @@ import me.crazyjiang.crazyread.App;
 import me.crazyjiang.crazyread.BuildConfig;
 import me.crazyjiang.crazyread.common.Constant;
 import me.crazyjiang.crazyread.di.qualifier.ZhihuUrl;
-import me.crazyjiang.crazyread.model.http.api.ZhihuApis;
+import me.crazyjiang.crazyread.model.http.api.ZhiHuApi;
 import me.crazyjiang.crazyread.util.FileUtil;
 import me.crazyjiang.crazyread.util.PhoneUtil;
 import okhttp3.Cache;
@@ -47,7 +47,7 @@ public class HttpModule {
     @Provides
     @ZhihuUrl
     Retrofit provideZhihuRetrofit(Retrofit.Builder builder, OkHttpClient client) {
-        return createRetrofit(builder, client, ZhihuApis.HOST);
+        return createRetrofit(builder, client, ZhiHuApi.HOST);
     }
 
     @Singleton
@@ -104,8 +104,8 @@ public class HttpModule {
 
     @Singleton
     @Provides
-    ZhihuApis provideZhihuService(@ZhihuUrl Retrofit retrofit) {
-        return retrofit.create(ZhihuApis.class);
+    ZhiHuApi provideZhihuService(@ZhihuUrl Retrofit retrofit) {
+        return retrofit.create(ZhiHuApi.class);
     }
 
     private Retrofit createRetrofit(Retrofit.Builder builder, OkHttpClient client, String url) {

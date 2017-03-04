@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 import me.crazyjiang.crazyread.common.RxUtil;
 import me.crazyjiang.crazyread.model.bean.WelcomeBean;
-import me.crazyjiang.crazyread.model.http.RetrofitHelper;
+import me.crazyjiang.crazyread.model.http.ApiService;
 import me.crazyjiang.crazyread.presenter.contract.SplashContract;
 import rx.Observable;
 import rx.functions.Action1;
@@ -19,16 +19,16 @@ public class SplashPresenter extends RxPresenter<SplashContract.View> implements
     private static final String RES = "1080*1776";
     private static final long DELAY = 2000L;
 
-    private RetrofitHelper mRetrofitHelper;
+    private ApiService mApiService;
 
     @Inject
-    public SplashPresenter(RetrofitHelper mRetrofitHelper) {
-        this.mRetrofitHelper = mRetrofitHelper;
+    public SplashPresenter(ApiService apiService) {
+        this.mApiService = apiService;
     }
 
     @Override
     public void getWelcomeData() {
-        addSubscribe(mRetrofitHelper.fetchWelcomeInfo(RES)
+        addSubscribe(mApiService.fetchWelcomeInfo(RES)
                 .compose(RxUtil.<WelcomeBean>rxSchedulerHelper())
                 .subscribe(new Action1<WelcomeBean>() {
                     @Override

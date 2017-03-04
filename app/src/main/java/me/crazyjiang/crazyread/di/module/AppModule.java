@@ -5,8 +5,8 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import me.crazyjiang.crazyread.App;
-import me.crazyjiang.crazyread.model.http.RetrofitHelper;
-import me.crazyjiang.crazyread.model.http.api.ZhihuApis;
+import me.crazyjiang.crazyread.model.http.ApiService;
+import me.crazyjiang.crazyread.model.http.api.ZhiHuApi;
 
 /**
  * Created by Jiangwenjin on 2017/2/28.
@@ -27,7 +27,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    RetrofitHelper provideRetrofitHelper(ZhihuApis zhihuApiService) {
-        return new RetrofitHelper(zhihuApiService);
+    ApiService provideApiService(ZhiHuApi api) {
+        return new ApiService(api);
     }
 }

@@ -7,7 +7,7 @@ import me.crazyjiang.crazyread.App;
 import me.crazyjiang.crazyread.di.module.AppModule;
 import me.crazyjiang.crazyread.di.module.HttpModule;
 import me.crazyjiang.crazyread.di.module.PageModule;
-import me.crazyjiang.crazyread.model.http.RetrofitHelper;
+import me.crazyjiang.crazyread.model.http.ApiService;
 
 /**
  * Created by Jiangwenjin on 2017/2/28.
@@ -17,5 +17,5 @@ import me.crazyjiang.crazyread.model.http.RetrofitHelper;
 public interface AppComponent {
     App getContext();
 
-    RetrofitHelper retrofitHelper();
+    ApiService apiService();
 }
