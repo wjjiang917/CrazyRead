@@ -33,12 +33,15 @@ public abstract class BaseActivity<T extends BasePresenter> extends SupportActiv
         setContentView(getLayoutResId());
         mUnBinder = ButterKnife.bind(this);
         mContext = this;
-        initInject();
+
+        // component inject
+        inject();
 
         if (mPresenter != null)
             mPresenter.attachView(this);
 
-        initEventAndData();
+        // load data, render, bind event
+        init();
     }
 
     protected ActivityComponent getActivityComponent() {
@@ -70,7 +73,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends SupportActiv
         recreate();
     }
 
-    protected abstract void initInject();
+    protected abstract void inject();
 
-    protected abstract void initEventAndData();
+    protected abstract void init();
 }

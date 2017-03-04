@@ -10,9 +10,9 @@ import me.crazyjiang.crazyread.ui.BaseView;
 
 public interface SplashContract {
     interface View extends BaseView {
-        void showContent(WelcomeBean welcomeBean);
+        void onSuccess(WelcomeBean welcomeBean);
 
-        void jumpToMain();
+        void onFinish();
     }
 
     interface Presenter extends BasePresenter<View> {

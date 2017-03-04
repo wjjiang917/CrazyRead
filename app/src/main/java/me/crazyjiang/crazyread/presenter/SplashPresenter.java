@@ -33,13 +33,13 @@ public class SplashPresenter extends RxPresenter<SplashContract.View> implements
                 .subscribe(new Action1<WelcomeBean>() {
                     @Override
                     public void call(WelcomeBean welcomeBean) {
-                        mView.showContent(welcomeBean);
+                        mView.onSuccess(welcomeBean);
                         startCountDown();
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        mView.jumpToMain();
+                        mView.onFinish();
                     }
                 }));
     }
@@ -53,7 +53,7 @@ public class SplashPresenter extends RxPresenter<SplashContract.View> implements
                 .subscribe(new Action1<Long>() {
                     @Override
                     public void call(Long aLong) {
-                        mView.jumpToMain();
+                        mView.onFinish();
                     }
                 }));
     }

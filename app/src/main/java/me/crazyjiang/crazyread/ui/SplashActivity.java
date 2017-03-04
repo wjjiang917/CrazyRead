@@ -24,24 +24,25 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
     }
 
     @Override
-    protected void initInject() {
+    protected void inject() {
         getActivityComponent().inject(this);
     }
 
     @Override
-    protected void initEventAndData() {
+    protected void init() {
         mPresenter.getWelcomeData();
     }
 
     @Override
-    public void showContent(WelcomeBean welcomeBean) {
+    public void onSuccess(WelcomeBean welcomeBean) {
         ImageUtil.load(this, welcomeBean.getImg(), ivWelcomeBg);
         ivWelcomeBg.animate().scaleX(1.12f).scaleY(1.12f).setDuration(2000).setStartDelay(100).start();
         tvWelcomeAuthor.setText(welcomeBean.getText());
     }
 
     @Override
-    public void jumpToMain() {
+    public void onFinish() {
+        // go to home page
     }
 
     @Override
