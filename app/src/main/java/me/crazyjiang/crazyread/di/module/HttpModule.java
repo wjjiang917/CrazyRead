@@ -46,8 +46,14 @@ public class HttpModule {
     @Singleton
     @Provides
     @ZhiHuUrl
-    Retrofit provideZhihuRetrofit(Retrofit.Builder builder, OkHttpClient client) {
+    Retrofit provideZhiHuRetrofit(Retrofit.Builder builder, OkHttpClient client) {
         return createRetrofit(builder, client, ZhiHuApi.HOST);
+    }
+
+    @Singleton
+    @Provides
+    ZhiHuApi provideZhiHuService(@ZhiHuUrl Retrofit retrofit) {
+        return retrofit.create(ZhiHuApi.class);
     }
 
     @Singleton
@@ -55,7 +61,7 @@ public class HttpModule {
     OkHttpClient provideClient(OkHttpClient.Builder builder) {
         if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             builder.addInterceptor(loggingInterceptor);
         }
         File cacheDir = new File(FileUtil.getDiskCacheDir(App.getInstance()) + File.pathSeparator + Constant.CACHE_NET);
@@ -71,10 +77,9 @@ public class HttpModule {
                 }
                 Response response = chain.proceed(request);
                 if (PhoneUtil.isNetworkConnected(App.getInstance())) {
-                    int maxAge = 0;
                     // 有网络时, 不缓存, 最大保存时长为0
                     response.newBuilder()
-                            .header("Cache-Control", "public, max-age=" + maxAge)
+                            .header("Cache-Control", "public, max-age=" + 0)
                             .removeHeader("Pragma")
                             .build();
                 } else {
@@ -100,12 +105,6 @@ public class HttpModule {
         //错误重连
         builder.retryOnConnectionFailure(true);
         return builder.build();
-    }
-
-    @Singleton
-    @Provides
-    ZhiHuApi provideZhihuService(@ZhiHuUrl Retrofit retrofit) {
-        return retrofit.create(ZhiHuApi.class);
     }
 
     private Retrofit createRetrofit(Retrofit.Builder builder, OkHttpClient client, String url) {
