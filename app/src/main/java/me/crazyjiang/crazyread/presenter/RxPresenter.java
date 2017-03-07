@@ -48,6 +48,6 @@ public class RxPresenter<T extends BaseView> implements BasePresenter<T> {
         if (mCompositeSubscription == null) {
             mCompositeSubscription = new CompositeSubscription();
         }
-        mCompositeSubscription.add(RxBus.getDefault().toDefaultObservable(eventType, act));
+        mCompositeSubscription.add(RxBus.getInstance().toDefaultObservable(eventType, act));
     }
 }

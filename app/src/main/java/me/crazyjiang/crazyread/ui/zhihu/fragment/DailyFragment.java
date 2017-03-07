@@ -1,10 +1,11 @@
 package me.crazyjiang.crazyread.ui.zhihu.fragment;
 
+import android.graphics.Canvas;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
+import com.chad.library.adapter.base.listener.OnItemDragListener;
+import com.chad.library.adapter.base.listener.OnItemSwipeListener;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 
@@ -31,7 +35,6 @@ import me.crazyjiang.crazyread.util.DateUtil;
 /**
  * Created by Jiangwenjin on 2017/3/4.
  */
-
 public class DailyFragment extends BaseFragment<DailyPresenter> implements DailyContract.View {
     @BindView(R.id.rv_daily_list)
     RecyclerView rvDailyList;
@@ -47,6 +50,7 @@ public class DailyFragment extends BaseFragment<DailyPresenter> implements Daily
     private TextView tvDailyDate;
     private LinearLayout parentLayout;
 
+    private String currentDate;
     private DailyAdapter mAdapter;
     private List<DailyStoriesBean.StoryBean> mStories = new ArrayList<>();
 
@@ -62,6 +66,7 @@ public class DailyFragment extends BaseFragment<DailyPresenter> implements Daily
 
     @Override
     protected void init() {
+        currentDate = DateUtil.getToday("yyyyMMdd");
         mAdapter = new DailyAdapter(mStories);
 
         // layout for header (slider and date)
@@ -90,14 +95,46 @@ public class DailyFragment extends BaseFragment<DailyPresenter> implements Daily
 
         rvDailyList.setLayoutManager(new LinearLayoutManager(mContext));
         rvDailyList.setAdapter(mAdapter);
+
+        // swipe and drag
+        ItemDragAndSwipeCallback itemDragAndSwipeCallback = new ItemDragAndSwipeCallback(mAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemDragAndSwipeCallback);
+        itemTouchHelper.attachToRecyclerView(rvDailyList);
+
+        // open drag
+        mAdapter.enableDragItem(itemTouchHelper, R.id.iv_daily_item, true);
+        mAdapter.setOnItemDragListener(onItemDragListener);
+
+        // open slide to delete
+        mAdapter.enableSwipeItem();
+        mAdapter.setOnItemSwipeListener(onItemSwipeListener);
+
+        // get today news
         mPresenter.getLatestNews();
+
+        // refresh
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (DateUtil.getToday("yyyyMMdd").equals(currentDate)) {
+                    mPresenter.getLatestNews();
+                } else {
+
+                }
+            }
+        });
     }
 
     @Override
     public void onLatestNewsLoaded(DailyStoriesBean dailyStoriesBean) {
+        if (swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(false);
+        }
+
         // check if it's today
         if (DateUtil.getToday("yyyyMMdd").equals(dailyStoriesBean.getDate())) {
             // show slider
+            sliderLayout.removeAllSliders();
             if (null != dailyStoriesBean.getTop_stories() && !dailyStoriesBean.getTop_stories().isEmpty()) {
                 TextSliderView textSliderView;
                 for (DailyStoriesBean.TopStoryBean topStoryBean : dailyStoriesBean.getTop_stories()) {
@@ -120,43 +157,44 @@ public class DailyFragment extends BaseFragment<DailyPresenter> implements Daily
             tvDailyDate.setText(dailyStoriesBean.getDate());
         }
 
-        // show news
-//        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DailyBeanCallback(mStories, dailyStoriesBean.getStories()), true);
-//        mStories = dailyStoriesBean.getStories();
-//        diffResult.dispatchUpdatesTo(mAdapter);
-
-        mAdapter.addData(dailyStoriesBean.getStories());
+        mAdapter.setNewData(dailyStoriesBean.getStories());
         mAdapter.notifyDataSetChanged();
     }
 
-    class DailyBeanCallback extends DiffUtil.Callback {
-        private List<DailyStoriesBean.StoryBean> mOldStories;
-        private List<DailyStoriesBean.StoryBean> mNewStories;
-
-        public DailyBeanCallback(List<DailyStoriesBean.StoryBean> mOldStories, List<DailyStoriesBean.StoryBean> mNewStories) {
-            this.mNewStories = mNewStories;
-            this.mOldStories = mOldStories;
+    OnItemDragListener onItemDragListener = new OnItemDragListener() {
+        @Override
+        public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int pos) {
         }
 
         @Override
-        public int getOldListSize() {
-            return null == mOldStories ? 0 : mOldStories.size();
+        public void onItemDragMoving(RecyclerView.ViewHolder source, int from, RecyclerView.ViewHolder target, int to) {
         }
 
         @Override
-        public int getNewListSize() {
-            return null == mNewStories ? 0 : mNewStories.size();
+        public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {
+        }
+    };
+
+    OnItemSwipeListener onItemSwipeListener = new OnItemSwipeListener() {
+
+        @Override
+        public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {
+
         }
 
         @Override
-        public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-            return mOldStories.get(oldItemPosition).getId().equals(mNewStories.get(newItemPosition).getId());
+        public void clearView(RecyclerView.ViewHolder viewHolder, int pos) {
+
         }
 
         @Override
-        public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-            return mOldStories.get(oldItemPosition).getId().equals(mNewStories.get(newItemPosition).getId())
-                    && mOldStories.get(oldItemPosition).getTitle().equals(mNewStories.get(newItemPosition).getTitle());
+        public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {
+
         }
-    }
+
+        @Override
+        public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
+
+        }
+    };
 }

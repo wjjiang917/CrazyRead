@@ -12,44 +12,42 @@ import rx.subjects.Subject;
  */
 
 public class RxBus {
-    /**
-     * Subject
-     */
-    private final Subject<Object, Object> bus;
+    private static volatile RxBus mInstance;
+    private SerializedSubject<Object, Object> mSubject;
 
-    /**
-     * PublishSubject只会把在订阅发生的时间点之后来自原始Observable的数据发射给观察者
-     */
     private RxBus() {
-        bus = new SerializedSubject<>(PublishSubject.create());
+        mSubject = new SerializedSubject<>(PublishSubject.create());
     }
 
-    public static RxBus getDefault() {
-        return RxBusHolder.sInstance;
-    }
-
-    private static class RxBusHolder {
-        private static final RxBus sInstance = new RxBus();
+    public static RxBus getInstance() {
+        if (mInstance == null) {
+            synchronized (RxBus.class) {
+                if (mInstance == null) {
+                    mInstance = new RxBus();
+                }
+            }
+        }
+        return mInstance;
     }
 
     /**
      * post event
      */
     public void post(Object o) {
-        bus.onNext(o);
+        mSubject.onNext(o);
     }
 
     /**
      * return specific Observable from eventType
      */
     public <T> Observable<T> toObservable(Class<T> eventType) {
-        return bus.ofType(eventType);
+        return mSubject.ofType(eventType);
     }
 
     /**
      * default subscribe
      */
     public <T> Subscription toDefaultObservable(Class<T> eventType, Action1<T> act) {
-        return bus.ofType(eventType).compose(RxUtil.<T>rxSchedulerHelper()).subscribe(act);
+        return mSubject.ofType(eventType).compose(RxUtil.<T>rxSchedulerHelper()).subscribe(act);
     }
 }

@@ -18,6 +18,9 @@ public class DailyPresenter extends RxPresenter<DailyContract.View> implements D
     @Inject
     public DailyPresenter(ApiService apiService) {
         this.mApiService = apiService;
+
+        // change date
+
     }
 
     @Override
