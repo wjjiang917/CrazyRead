@@ -14,10 +14,13 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import me.crazyjiang.crazyread.R;
+import me.crazyjiang.crazyread.common.Constant;
 import me.crazyjiang.crazyread.presenter.MainPresenter;
 import me.crazyjiang.crazyread.presenter.contract.MainContract;
 import me.crazyjiang.crazyread.ui.BaseActivity;
 import me.crazyjiang.crazyread.ui.zhihu.fragment.ZhiHuFragment;
+import me.crazyjiang.crazyread.util.SPUtil;
+import me.yokeyword.fragmentation.SupportFragment;
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
     @BindView(R.id.drawer_layout)
@@ -32,6 +35,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Inject
     ZhiHuFragment zhiHuFragment;
 
+    private int hideFragment = Constant.TYPE_ZHIHU;
+    private int showFragment = Constant.TYPE_ZHIHU;
+
     private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
@@ -42,8 +48,16 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        showHideFragment(zhiHuFragment);
+        if (savedInstanceState == null) {
+            SPUtil.setNightModeState(false);
+        } else {
+            showFragment = SPUtil.getCurrentPage();
+            hideFragment = Constant.TYPE_ZHIHU;
+            showHideFragment(getFragment(showFragment), getFragment(hideFragment));
+            mNavigationView.getMenu().findItem(R.id.drawer_zhihu).setChecked(false);
+            mToolbar.setTitle(mNavigationView.getMenu().findItem(getCurrentResId(showFragment)).getTitle().toString());
+            hideFragment = showFragment;
+        }
     }
 
     @Override
@@ -58,12 +72,48 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         mDrawerToggle.syncState();
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
+        // load fragments
+        loadMultipleRootFragment(R.id.layout_main_content, 0, zhiHuFragment);
+
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.drawer_zhihu:
+                        break;
+                    case R.id.drawer_gank:
+                        break;
+                    case R.id.drawer_wechat:
+                        break;
+                    case R.id.drawer_gold:
+                        break;
+                    case R.id.drawer_vtex:
+                        break;
+                    case R.id.drawer_setting:
+                        break;
+                    case R.id.drawer_like:
+                        break;
+                    case R.id.drawer_about:
+                        break;
+                }
                 return false;
             }
         });
     }
 
+    private SupportFragment getFragment(int pageType) {
+        switch (pageType) {
+            case Constant.TYPE_ZHIHU:
+                return zhiHuFragment;
+        }
+        return zhiHuFragment;
+    }
+
+    private int getCurrentResId(int pageType) {
+        switch (pageType) {
+            case Constant.TYPE_ZHIHU:
+                return R.id.drawer_zhihu;
+        }
+        return R.id.drawer_zhihu;
+    }
 }

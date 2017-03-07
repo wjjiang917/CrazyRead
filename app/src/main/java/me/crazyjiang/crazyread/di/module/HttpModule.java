@@ -64,8 +64,7 @@ public class HttpModule {
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             builder.addInterceptor(loggingInterceptor);
         }
-        File cacheDir = new File(FileUtil.getDiskCacheDir(App.getInstance()) + File.pathSeparator + Constant.CACHE_NET);
-        Cache cache = new Cache(cacheDir, 1024 * 1024 * 50);
+
         Interceptor cacheInterceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
@@ -97,7 +96,17 @@ public class HttpModule {
         //设置缓存
         builder.addNetworkInterceptor(cacheInterceptor);
         builder.addInterceptor(cacheInterceptor);
-        builder.cache(cache);
+
+        File cacheDir = new File(FileUtil.getDiskCacheDir(App.getInstance()) + File.pathSeparator + Constant.CACHE_NET);
+        if (!cacheDir.exists()) {
+            cacheDir.mkdirs();
+        }
+
+        if (cacheDir.exists()) {
+            Cache cache = new Cache(cacheDir, 1024 * 1024 * 50); // 50M
+            builder.cache(cache);
+        }
+
         //设置超时
         builder.connectTimeout(10, TimeUnit.SECONDS);
         builder.readTimeout(20, TimeUnit.SECONDS);

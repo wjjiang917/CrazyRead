@@ -27,7 +27,7 @@ public class DailyPresenter extends RxPresenter<DailyContract.View> implements D
                 .subscribe(new Action1<DailyStoriesBean>() {
                     @Override
                     public void call(DailyStoriesBean dailyStoriesBean) {
-
+                        mView.onLatestNewsLoaded(dailyStoriesBean);
                     }
                 }, new Action1<Throwable>() {
                     @Override

@@ -164,7 +164,7 @@ public class Logger {
 
                 File dirFile = new File(dir);
                 if (!dirFile.exists()) {
-                    dirFile.mkdirs();
+                    System.out.println(dirFile.getAbsolutePath() + " mkdirs return: " + dirFile.mkdirs());
                 }
 
                 String log = dir + time + ".log";

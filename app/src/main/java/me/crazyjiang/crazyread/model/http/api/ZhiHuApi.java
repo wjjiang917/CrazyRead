@@ -9,9 +9,8 @@ import rx.Observable;
 /**
  * Created by Jiangwenjin on 2017/2/28.
  */
-
 public interface ZhiHuApi {
-    String HOST = "http://news-at.zhihu.com/api/4/";
+    String HOST = "https://news-at.zhihu.com/api/4/";
 
     /**
      * ZhiHu start image

@@ -23,7 +23,7 @@ public class ZhiHuFragment extends SimpleFragment {
     ViewPager mViewPager;
 
     private ZhiHuAdapter mAdapter;
-    private String[] tabTitles = new String[]{"日报", "主题", "专栏", "热门"};
+    private String[] tabTitles = new String[]{"日报"};
     private List<Fragment> fragments = new ArrayList<>();
 
     @Override
@@ -34,21 +34,12 @@ public class ZhiHuFragment extends SimpleFragment {
     @Override
     protected void init() {
         fragments.add(new DailyFragment());
-        fragments.add(new DailyFragment());
-        fragments.add(new DailyFragment());
-        fragments.add(new DailyFragment());
 
         mAdapter = new ZhiHuAdapter(getChildFragmentManager(), fragments);
         mViewPager.setAdapter(mAdapter);
 
         mTabLayout.addTab(mTabLayout.newTab().setText(tabTitles[0]));
-        mTabLayout.addTab(mTabLayout.newTab().setText(tabTitles[1]));
-        mTabLayout.addTab(mTabLayout.newTab().setText(tabTitles[2]));
-        mTabLayout.addTab(mTabLayout.newTab().setText(tabTitles[3]));
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.getTabAt(0).setText(tabTitles[0]);
-        mTabLayout.getTabAt(1).setText(tabTitles[1]);
-        mTabLayout.getTabAt(2).setText(tabTitles[2]);
-        mTabLayout.getTabAt(3).setText(tabTitles[3]);
     }
 }
