@@ -23,4 +23,8 @@ public class ApiService {
     public Observable<DailyStoriesBean> fetchLatestNews() {
         return mZhiHuApiService.getLatestNews();
     }
+
+    public Observable<DailyStoriesBean> fetchNews(String date) {
+        return mZhiHuApiService.getNews(date);
+    }
 }

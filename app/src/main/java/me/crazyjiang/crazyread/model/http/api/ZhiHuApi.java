@@ -24,4 +24,7 @@ public interface ZhiHuApi {
      */
     @GET("news/latest")
     Observable<DailyStoriesBean> getLatestNews();
+
+    @GET("news/before/{date}")
+    Observable<DailyStoriesBean> getNews(@Path("date") String date);
 }

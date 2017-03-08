@@ -1,5 +1,6 @@
 package me.crazyjiang.crazyread.ui.zhihu.fragment;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,19 +19,24 @@ import com.chad.library.adapter.base.listener.OnItemDragListener;
 import com.chad.library.adapter.base.listener.OnItemSwipeListener;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
+import butterknife.OnClick;
 import me.crazyjiang.crazyread.R;
+import me.crazyjiang.crazyread.common.RxBus;
 import me.crazyjiang.crazyread.model.bean.DailyStoriesBean;
 import me.crazyjiang.crazyread.presenter.DailyPresenter;
 import me.crazyjiang.crazyread.presenter.contract.DailyContract;
 import me.crazyjiang.crazyread.ui.BaseFragment;
+import me.crazyjiang.crazyread.ui.zhihu.activity.CalendarActivity;
 import me.crazyjiang.crazyread.ui.zhihu.adapter.DailyAdapter;
 import me.crazyjiang.crazyread.util.DateUtil;
+import top.wefor.circularanim.CircularAnim;
 
 /**
  * Created by Jiangwenjin on 2017/3/4.
@@ -119,18 +125,19 @@ public class DailyFragment extends BaseFragment<DailyPresenter> implements Daily
                 if (DateUtil.getToday("yyyyMMdd").equals(currentDate)) {
                     mPresenter.getLatestNews();
                 } else {
-
+                    CalendarDay date = CalendarDay.from(DateUtil.getDate(currentDate, "yyyyMMdd"));
+                    RxBus.getInstance().post(date);
                 }
             }
         });
     }
 
     @Override
-    public void onLatestNewsLoaded(DailyStoriesBean dailyStoriesBean) {
+    public void onNewsLoaded(DailyStoriesBean dailyStoriesBean) {
         if (swipeRefresh.isRefreshing()) {
             swipeRefresh.setRefreshing(false);
         }
-
+        currentDate = dailyStoriesBean.getDate();
         // check if it's today
         if (DateUtil.getToday("yyyyMMdd").equals(dailyStoriesBean.getDate())) {
             // show slider
@@ -154,11 +161,26 @@ public class DailyFragment extends BaseFragment<DailyPresenter> implements Daily
             tvDailyDate.setText("今日热闻");
         } else {
             sliderLayout.setVisibility(View.GONE);
-            tvDailyDate.setText(dailyStoriesBean.getDate());
+            tvDailyDate.setText(DateUtil.getNewFormat(dailyStoriesBean.getDate(), "yyyyMMdd", "yyyy年MM月dd日"));
         }
 
         mAdapter.setNewData(dailyStoriesBean.getStories());
         mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * click calender float action button
+     */
+    @OnClick(R.id.fab_calender)
+    void clickCalender(View view) {
+        CircularAnim.fullActivity(mActivity, view)
+                .colorOrImageRes(R.color.fab_bg)
+                .go(new CircularAnim.OnAnimationEndListener() {
+                    @Override
+                    public void onAnimationEnd() {
+                        startActivity(new Intent(mContext, CalendarActivity.class));
+                    }
+                });
     }
 
     OnItemDragListener onItemDragListener = new OnItemDragListener() {
@@ -176,7 +198,6 @@ public class DailyFragment extends BaseFragment<DailyPresenter> implements Daily
     };
 
     OnItemSwipeListener onItemSwipeListener = new OnItemSwipeListener() {
-
         @Override
         public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {
 

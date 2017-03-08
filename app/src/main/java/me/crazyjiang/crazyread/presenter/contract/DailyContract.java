@@ -10,7 +10,7 @@ import me.crazyjiang.crazyread.ui.BaseView;
 
 public interface DailyContract {
     interface View extends BaseView {
-        void onLatestNewsLoaded(DailyStoriesBean dailyStoriesBean);
+        void onNewsLoaded(DailyStoriesBean dailyStoriesBean);
     }
 
     interface Presenter extends BasePresenter<View> {

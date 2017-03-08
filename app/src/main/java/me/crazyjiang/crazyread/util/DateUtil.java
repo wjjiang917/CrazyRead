@@ -56,6 +56,21 @@ public class DateUtil {
         return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(time);
     }
 
+    public static Date getDate(String date, String dateFormat) {
+        DateFormat format = new SimpleDateFormat(dateFormat, Locale.getDefault());
+        try {
+            return format.parse(date);
+        } catch (ParseException e) {
+            Logger.e("", e);
+            return null;
+        }
+    }
+
+    public static String getDate(Date date, String dateFormat) {
+        DateFormat format = new SimpleDateFormat(dateFormat, Locale.getDefault());
+        return format.format(date);
+    }
+
     public static String getDate(String dateFormat, long currenttimemillis) {
         return new SimpleDateFormat(dateFormat, Locale.getDefault()).format(currenttimemillis);
     }
