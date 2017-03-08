@@ -2,6 +2,7 @@ package me.crazyjiang.crazyread.model.http;
 
 import me.crazyjiang.crazyread.model.bean.DailyStoriesBean;
 import me.crazyjiang.crazyread.model.bean.StartImageBean;
+import me.crazyjiang.crazyread.model.bean.ZhiHuNewsBean;
 import me.crazyjiang.crazyread.model.http.api.ZhiHuApi;
 import rx.Observable;
 
@@ -26,5 +27,9 @@ public class ApiService {
 
     public Observable<DailyStoriesBean> fetchNews(String date) {
         return mZhiHuApiService.getNews(date);
+    }
+
+    public Observable<ZhiHuNewsBean> fetchNewsDetail(Integer id) {
+        return mZhiHuApiService.getNewsDetail(id);
     }
 }

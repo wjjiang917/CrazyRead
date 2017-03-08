@@ -30,7 +30,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@mipmap/ic_launcher"
-                android:transitionName="shareView" />
+                android:transitionName="zhi_news_image" />
 
             <TextView
                 android:id="@+id/tv_daily_item_title"

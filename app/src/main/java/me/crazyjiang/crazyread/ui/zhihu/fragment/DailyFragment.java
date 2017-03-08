@@ -1,7 +1,9 @@
 package me.crazyjiang.crazyread.ui.zhihu.fragment;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.listener.OnItemDragListener;
 import com.chad.library.adapter.base.listener.OnItemSwipeListener;
 import com.daimajia.slider.library.SliderLayout;
@@ -28,12 +31,14 @@ import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.OnClick;
 import me.crazyjiang.crazyread.R;
+import me.crazyjiang.crazyread.common.Constant;
 import me.crazyjiang.crazyread.common.RxBus;
 import me.crazyjiang.crazyread.model.bean.DailyStoriesBean;
 import me.crazyjiang.crazyread.presenter.DailyPresenter;
 import me.crazyjiang.crazyread.presenter.contract.DailyContract;
 import me.crazyjiang.crazyread.ui.BaseFragment;
 import me.crazyjiang.crazyread.ui.zhihu.activity.CalendarActivity;
+import me.crazyjiang.crazyread.ui.zhihu.activity.ZhiHuNewsActivity;
 import me.crazyjiang.crazyread.ui.zhihu.adapter.DailyAdapter;
 import me.crazyjiang.crazyread.util.DateUtil;
 import top.wefor.circularanim.CircularAnim;
@@ -130,6 +135,20 @@ public class DailyFragment extends BaseFragment<DailyPresenter> implements Daily
                 }
             }
         });
+
+        rvDailyList.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(mContext, ZhiHuNewsActivity.class);
+                intent.putExtra(Constant.INTENT_EXTRA_NEWS_ID, mStories.get(position).getId());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(mActivity, view, "zhi_news_image");
+                    mContext.startActivity(intent, options.toBundle());
+                } else {
+                    mContext.startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
@@ -138,6 +157,7 @@ public class DailyFragment extends BaseFragment<DailyPresenter> implements Daily
             swipeRefresh.setRefreshing(false);
         }
         currentDate = dailyStoriesBean.getDate();
+        mStories = dailyStoriesBean.getStories();
         // check if it's today
         if (DateUtil.getToday("yyyyMMdd").equals(dailyStoriesBean.getDate())) {
             // show slider

@@ -2,6 +2,7 @@ package me.crazyjiang.crazyread.model.http.api;
 
 import me.crazyjiang.crazyread.model.bean.DailyStoriesBean;
 import me.crazyjiang.crazyread.model.bean.StartImageBean;
+import me.crazyjiang.crazyread.model.bean.ZhiHuNewsBean;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -27,4 +28,7 @@ public interface ZhiHuApi {
 
     @GET("news/before/{date}")
     Observable<DailyStoriesBean> getNews(@Path("date") String date);
+
+    @GET("news/{id}")
+    Observable<ZhiHuNewsBean> getNewsDetail(@Path("id") Integer id);
 }

@@ -24,9 +24,8 @@ import rx.schedulers.Schedulers;
  */
 
 public class DailyPresenter extends RxPresenter<DailyContract.View> implements DailyContract.Presenter {
-
     @Inject
-    public DailyPresenter(final ApiService apiService) {
+    public DailyPresenter(ApiService apiService) {
         this.mApiService = apiService;
 
         // change date
