@@ -15,6 +15,7 @@ public interface Constant {
 
     // orig type
     int TYPE_ZHIHU = 101;
+    int TYPE_NETEASE = 102;
 
     // intent extra key
     String INTENT_EXTRA_NEWS_ID = "intent_extra_news_id";

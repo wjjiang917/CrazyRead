@@ -81,19 +81,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 switch (item.getItemId()) {
                     case R.id.drawer_zhihu:
                         break;
-                    case R.id.drawer_gank:
-                        break;
-                    case R.id.drawer_wechat:
-                        break;
-                    case R.id.drawer_gold:
-                        break;
-                    case R.id.drawer_vtex:
-                        break;
-                    case R.id.drawer_setting:
-                        break;
-                    case R.id.drawer_like:
-                        break;
-                    case R.id.drawer_about:
+                    case R.id.drawer_netease_video:
                         break;
                 }
                 return false;
