@@ -1,7 +1,12 @@
 package me.crazyjiang.crazyread.ui.netease.fragment;
 
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +34,8 @@ public class NetEaseVideosFragment extends BaseFragment<NetEaseVideosPresenter> 
     private NetEaseVideosAdapter mAdapter;
     private List<NetEaseVideoBean> mVideos = new ArrayList<>();
     private String categoryId;
+    private boolean loadMore = false;
+    private int startPage = 0;
 
     @Override
     protected int getLayoutResId() {
@@ -47,12 +54,46 @@ public class NetEaseVideosFragment extends BaseFragment<NetEaseVideosPresenter> 
         }
 
         mAdapter = new NetEaseVideosAdapter(mVideos);
-        mPresenter.getVideoList(categoryId, 0);
+        rvVideoList.setLayoutManager(new LinearLayoutManager(mContext));
+        rvVideoList.setAdapter(mAdapter);
+        rvVideoList.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+            }
+        });
+        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                loadMore = true;
+                mPresenter.getVideoList(categoryId, startPage);
+            }
+        });
+
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadMore = false;
+                startPage = 0;
+                mPresenter.getVideoList(categoryId, startPage);
+            }
+        });
+
+        mPresenter.getVideoList(categoryId, startPage);
     }
 
     @Override
     public void onVideosLoaded(Map<String, List<NetEaseVideoBean>> videos) {
+        if (swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(false);
+        }
+
         mVideos = videos.get(categoryId);
-        mAdapter.setNewData(videos.get(categoryId));
+        startPage = mVideos.size();
+        if (loadMore) {
+            mAdapter.addData(videos.get(categoryId));
+        } else {
+            mAdapter.setNewData(videos.get(categoryId));
+        }
     }
 }
