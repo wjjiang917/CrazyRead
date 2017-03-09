@@ -39,7 +39,7 @@ public class ZhiHuFragment extends SimpleFragment {
         mAdapter = new ViewPagerAdapter(getChildFragmentManager(), fragments);
         mViewPager.setAdapter(mAdapter);
 
-        mTabLayout.addTab(mTabLayout.newTab().setText(ZHIHU_TITLE[0]));
+        mTabLayout.addTab(mTabLayout.newTab());
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.getTabAt(0).setText(ZHIHU_TITLE[0]);
     }

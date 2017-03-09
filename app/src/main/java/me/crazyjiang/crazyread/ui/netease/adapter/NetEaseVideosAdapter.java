@@ -1,4 +1,4 @@
-package me.crazyjiang.crazyread.ui.zhihu.adapter;
+package me.crazyjiang.crazyread.ui.netease.adapter;
 
 import android.widget.ImageView;
 

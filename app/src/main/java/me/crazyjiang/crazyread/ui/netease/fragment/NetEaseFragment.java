@@ -13,6 +13,7 @@ import me.crazyjiang.crazyread.R;
 import me.crazyjiang.crazyread.common.Constant;
 import me.crazyjiang.crazyread.ui.SimpleFragment;
 import me.crazyjiang.crazyread.ui.ViewPagerAdapter;
+import me.crazyjiang.crazyread.ui.zhihu.fragment.DailyFragment;
 
 /**
  * Created by Jiangwenjin on 2017/3/8.
@@ -50,10 +51,11 @@ public class NetEaseFragment extends SimpleFragment {
         mAdapter = new ViewPagerAdapter(getChildFragmentManager(), fragments);
         mViewPager.setAdapter(mAdapter);
 
-        mTabLayout.addTab(mTabLayout.newTab().setText(VIDEO_TITLE[0]));
-        mTabLayout.addTab(mTabLayout.newTab().setText(VIDEO_TITLE[1]));
-        mTabLayout.addTab(mTabLayout.newTab().setText(VIDEO_TITLE[2]));
-        mTabLayout.addTab(mTabLayout.newTab().setText(VIDEO_TITLE[3]));
+        mTabLayout.addTab(mTabLayout.newTab());
+        mTabLayout.addTab(mTabLayout.newTab());
+        mTabLayout.addTab(mTabLayout.newTab());
+        mTabLayout.addTab(mTabLayout.newTab());
+        mTabLayout.addTab(mTabLayout.newTab());
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.getTabAt(0).setText(VIDEO_TITLE[0]);
         mTabLayout.getTabAt(1).setText(VIDEO_TITLE[1]);

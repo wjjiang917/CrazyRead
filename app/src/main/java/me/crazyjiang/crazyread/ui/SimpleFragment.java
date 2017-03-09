@@ -22,7 +22,6 @@ public abstract class SimpleFragment extends SupportFragment {
     protected Activity mActivity;
     protected Context mContext;
     private Unbinder mUnbinder;
-    private boolean isInit = false;
 
     protected abstract int getLayoutResId();
 
@@ -44,26 +43,12 @@ public abstract class SimpleFragment extends SupportFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mUnbinder = ButterKnife.bind(this, view);
-        if (savedInstanceState == null) {
-            if (!isHidden()) {
-                isInit = true;
-                init();
-            }
-//        } else {
-//            if (!isSupportHidden()) {
-//                isInit = true;
-//                init();
-//            }
-        }
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!isInit && !hidden) {
-            isInit = true;
-            init();
-        }
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+        init();
     }
 
     @Override

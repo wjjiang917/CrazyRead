@@ -30,7 +30,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends SupportFragm
     protected Activity mActivity;
     protected Context mContext;
     private Unbinder mUnbinder;
-    protected boolean isInit = false;
 
     protected abstract int getLayoutResId();
 
@@ -65,26 +64,17 @@ public abstract class BaseFragment<T extends BasePresenter> extends SupportFragm
         super.onViewCreated(view, savedInstanceState);
         mPresenter.attachView(this);
         mUnbinder = ButterKnife.bind(this, view);
-        if (savedInstanceState == null) {
-            if (!isHidden()) {
-                isInit = true;
-                init();
-            }
-//        } else {
-//            if (!isSupportHidden()) {
-//                isInit = true;
-//                init();
-//            }
-        }
     }
 
+    /**
+     * 懒加载方法 会在 Fragment第一次对用户可见时回调（即第一次onSupportVisible()被回调时
+     *
+     * @param savedInstanceState
+     */
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!isInit && !hidden) {
-            isInit = true;
-            init();
-        }
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+        init();
     }
 
     @Override

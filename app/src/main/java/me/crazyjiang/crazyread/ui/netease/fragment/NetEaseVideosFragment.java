@@ -14,7 +14,7 @@ import me.crazyjiang.crazyread.model.bean.NetEaseVideoBean;
 import me.crazyjiang.crazyread.presenter.NetEaseVideosPresenter;
 import me.crazyjiang.crazyread.presenter.contract.NetEaseVideosContract;
 import me.crazyjiang.crazyread.ui.BaseFragment;
-import me.crazyjiang.crazyread.ui.zhihu.adapter.NetEaseVideosAdapter;
+import me.crazyjiang.crazyread.ui.netease.adapter.NetEaseVideosAdapter;
 
 /**
  * Created by Jiangwenjin on 2017/3/8.
@@ -53,7 +53,6 @@ public class NetEaseVideosFragment extends BaseFragment<NetEaseVideosPresenter> 
     @Override
     public void onVideosLoaded(Map<String, List<NetEaseVideoBean>> videos) {
         mVideos = videos.get(categoryId);
-        mAdapter.setNewData(mVideos);
-        mAdapter.notifyDataSetChanged();
+        mAdapter.setNewData(videos.get(categoryId));
     }
 }

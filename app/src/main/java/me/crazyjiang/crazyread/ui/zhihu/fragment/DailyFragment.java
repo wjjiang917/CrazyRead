@@ -185,7 +185,6 @@ public class DailyFragment extends BaseFragment<DailyPresenter> implements Daily
         }
 
         mAdapter.setNewData(dailyStoriesBean.getStories());
-        mAdapter.notifyDataSetChanged();
     }
 
     /**
