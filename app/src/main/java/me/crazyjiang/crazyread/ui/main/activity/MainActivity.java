@@ -18,6 +18,7 @@ import me.crazyjiang.crazyread.common.Constant;
 import me.crazyjiang.crazyread.presenter.MainPresenter;
 import me.crazyjiang.crazyread.presenter.contract.MainContract;
 import me.crazyjiang.crazyread.ui.BaseActivity;
+import me.crazyjiang.crazyread.ui.netease.fragment.NetEaseFragment;
 import me.crazyjiang.crazyread.ui.zhihu.fragment.ZhiHuFragment;
 import me.crazyjiang.crazyread.util.SPUtil;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -35,10 +36,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Inject
     ZhiHuFragment zhiHuFragment;
 
+    @Inject
+    NetEaseFragment netEaseFragment;
+
     private int hideFragment = Constant.TYPE_ZHIHU;
     private int showFragment = Constant.TYPE_ZHIHU;
 
     private ActionBarDrawerToggle mDrawerToggle;
+    private MenuItem mLastMenuItem;
 
     @Override
     protected int getLayoutResId() {
@@ -71,19 +76,31 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerToggle.syncState();
         mDrawerLayout.addDrawerListener(mDrawerToggle);
-
+        mLastMenuItem = mNavigationView.getMenu().findItem(R.id.drawer_zhihu);
         // load fragments
-        loadMultipleRootFragment(R.id.layout_main_content, 0, zhiHuFragment);
+        loadMultipleRootFragment(R.id.layout_main_content, 0, zhiHuFragment, netEaseFragment);
 
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.drawer_zhihu:
+                        showFragment = Constant.TYPE_ZHIHU;
                         break;
                     case R.id.drawer_netease_video:
+                        showFragment = Constant.TYPE_NETEASE;
                         break;
                 }
+                if (mLastMenuItem != null) {
+                    mLastMenuItem.setChecked(false);
+                }
+                mLastMenuItem = item;
+                SPUtil.setCurrentPage(showFragment);
+                item.setChecked(true);
+                mToolbar.setTitle(item.getTitle());
+                mDrawerLayout.closeDrawers();
+                showHideFragment(getFragment(showFragment), getFragment(hideFragment));
+                hideFragment = showFragment;
                 return false;
             }
         });
@@ -93,6 +110,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         switch (pageType) {
             case Constant.TYPE_ZHIHU:
                 return zhiHuFragment;
+            case Constant.TYPE_NETEASE:
+                return netEaseFragment;
         }
         return zhiHuFragment;
     }
@@ -101,6 +120,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         switch (pageType) {
             case Constant.TYPE_ZHIHU:
                 return R.id.drawer_zhihu;
+            case Constant.TYPE_NETEASE:
+                return R.id.drawer_netease_video;
         }
         return R.id.drawer_zhihu;
     }

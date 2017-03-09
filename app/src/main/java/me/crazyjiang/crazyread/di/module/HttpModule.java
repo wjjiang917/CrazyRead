@@ -12,6 +12,7 @@ import me.crazyjiang.crazyread.App;
 import me.crazyjiang.crazyread.BuildConfig;
 import me.crazyjiang.crazyread.common.Constant;
 import me.crazyjiang.crazyread.di.qualifier.ServiceType;
+import me.crazyjiang.crazyread.model.http.api.NetEaseApi;
 import me.crazyjiang.crazyread.model.http.api.ZhiHuApi;
 import me.crazyjiang.crazyread.util.FileUtil;
 import me.crazyjiang.crazyread.util.PhoneUtil;
@@ -54,6 +55,19 @@ public class HttpModule {
     @Provides
     ZhiHuApi provideZhiHuService(@ServiceType("ZhiHu") Retrofit retrofit) {
         return retrofit.create(ZhiHuApi.class);
+    }
+
+    @Singleton
+    @Provides
+    @ServiceType("NetEase")
+    Retrofit provideNetEaseRetrofit(Retrofit.Builder builder, OkHttpClient client) {
+        return createRetrofit(builder, client, NetEaseApi.HOST);
+    }
+
+    @Singleton
+    @Provides
+    NetEaseApi provideNetEaseService(@ServiceType("NetEase") Retrofit retrofit) {
+        return retrofit.create(NetEaseApi.class);
     }
 
     @Singleton

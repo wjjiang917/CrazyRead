@@ -8,6 +8,7 @@ import me.crazyjiang.crazyread.di.module.AppModule;
 import me.crazyjiang.crazyread.di.module.HttpModule;
 import me.crazyjiang.crazyread.di.module.PageModule;
 import me.crazyjiang.crazyread.model.http.ApiService;
+import me.crazyjiang.crazyread.ui.netease.fragment.NetEaseFragment;
 import me.crazyjiang.crazyread.ui.zhihu.fragment.ZhiHuFragment;
 
 /**
@@ -21,4 +22,6 @@ public interface AppComponent {
     ApiService apiService();
 
     ZhiHuFragment zhiHuFragment();
+
+    NetEaseFragment netEaseFragment();
 }

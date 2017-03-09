@@ -5,6 +5,7 @@ import android.app.Activity;
 import dagger.Component;
 import me.crazyjiang.crazyread.di.module.FragmentModule;
 import me.crazyjiang.crazyread.di.scope.FragmentScope;
+import me.crazyjiang.crazyread.ui.netease.fragment.NetEaseVideosFragment;
 import me.crazyjiang.crazyread.ui.zhihu.fragment.DailyFragment;
 
 /**
@@ -16,4 +17,6 @@ public interface FragmentComponent {
     Activity getActivity();
 
     void inject(DailyFragment dailyFragment);
+
+    void inject(NetEaseVideosFragment netEaseVideosFragment);
 }

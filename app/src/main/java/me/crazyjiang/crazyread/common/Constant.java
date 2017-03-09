@@ -17,6 +17,7 @@ public interface Constant {
     int TYPE_ZHIHU = 101;
     int TYPE_NETEASE = 102;
 
-    // intent extra key
+    // intent extra key / fragment argument bundle key
     String INTENT_EXTRA_NEWS_ID = "intent_extra_news_id";
+    String BUNDLE_CATEGORY_ID = "bundle_category_id";
 }

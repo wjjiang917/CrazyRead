@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import me.crazyjiang.crazyread.ui.netease.fragment.NetEaseFragment;
 import me.crazyjiang.crazyread.ui.zhihu.fragment.ZhiHuFragment;
 
 /**
@@ -15,5 +16,11 @@ public class PageModule {
     @Provides
     ZhiHuFragment provideZhiHu() {
         return new ZhiHuFragment();
+    }
+
+    @Singleton
+    @Provides
+    NetEaseFragment provideNetEase() {
+        return new NetEaseFragment();
     }
 }

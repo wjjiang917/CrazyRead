@@ -1,8 +1,13 @@
 package me.crazyjiang.crazyread.model.http;
 
+import java.util.List;
+import java.util.Map;
+
 import me.crazyjiang.crazyread.model.bean.DailyStoriesBean;
+import me.crazyjiang.crazyread.model.bean.NetEaseVideoBean;
 import me.crazyjiang.crazyread.model.bean.StartImageBean;
 import me.crazyjiang.crazyread.model.bean.ZhiHuNewsBean;
+import me.crazyjiang.crazyread.model.http.api.NetEaseApi;
 import me.crazyjiang.crazyread.model.http.api.ZhiHuApi;
 import rx.Observable;
 
@@ -11,25 +16,31 @@ import rx.Observable;
  */
 
 public class ApiService {
-    private ZhiHuApi mZhiHuApiService;
+    private ZhiHuApi zhiHuApi;
+    private NetEaseApi netEaseApi;
 
-    public ApiService(ZhiHuApi api) {
-        this.mZhiHuApiService = api;
+    public ApiService(ZhiHuApi zhiHuApi, NetEaseApi netEaseApi) {
+        this.zhiHuApi = zhiHuApi;
+        this.netEaseApi = netEaseApi;
     }
 
     public Observable<StartImageBean> fetchStartImage(String res) {
-        return mZhiHuApiService.getStartImage(res);
+        return zhiHuApi.getStartImage(res);
     }
 
     public Observable<DailyStoriesBean> fetchLatestNews() {
-        return mZhiHuApiService.getLatestNews();
+        return zhiHuApi.getLatestNews();
     }
 
     public Observable<DailyStoriesBean> fetchNews(String date) {
-        return mZhiHuApiService.getNews(date);
+        return zhiHuApi.getNews(date);
     }
 
     public Observable<ZhiHuNewsBean> fetchNewsDetail(Integer id) {
-        return mZhiHuApiService.getNewsDetail(id);
+        return zhiHuApi.getNewsDetail(id);
+    }
+
+    public Observable<Map<String, List<NetEaseVideoBean>>> fetchVideoList(String categoryId, int startPage) {
+        return netEaseApi.getVideoList(categoryId, startPage);
     }
 }

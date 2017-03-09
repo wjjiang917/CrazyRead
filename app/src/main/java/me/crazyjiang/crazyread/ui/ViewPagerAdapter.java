@@ -1,4 +1,4 @@
-package me.crazyjiang.crazyread.ui.zhihu.adapter;
+package me.crazyjiang.crazyread.ui;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,10 +10,10 @@ import java.util.List;
  * Created by Jiangwenjin on 2017/3/4.
  */
 
-public class ZhiHuAdapter extends FragmentPagerAdapter {
+public class ViewPagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> mFragments;
 
-    public ZhiHuAdapter(FragmentManager fm, List<Fragment> fragments) {
+    public ViewPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
         super(fm);
         this.mFragments = fragments;
     }

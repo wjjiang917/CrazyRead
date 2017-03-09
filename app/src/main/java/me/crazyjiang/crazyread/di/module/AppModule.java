@@ -6,6 +6,7 @@ import dagger.Module;
 import dagger.Provides;
 import me.crazyjiang.crazyread.App;
 import me.crazyjiang.crazyread.model.http.ApiService;
+import me.crazyjiang.crazyread.model.http.api.NetEaseApi;
 import me.crazyjiang.crazyread.model.http.api.ZhiHuApi;
 
 /**
@@ -27,7 +28,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    ApiService provideApiService(ZhiHuApi api) {
-        return new ApiService(api);
+    ApiService provideApiService(ZhiHuApi zhiHuApi, NetEaseApi netEaseApi) {
+        return new ApiService(zhiHuApi, netEaseApi);
     }
 }
