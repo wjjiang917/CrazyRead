@@ -162,7 +162,7 @@ public class PlayerManager {
                         break;
                     case IMediaPlayer.MEDIA_INFO_NETWORK_BANDWIDTH:
                         //显示下载速度
-//                      Toast.show("download rate:" + extra);
+                        Logger.d("download rate: " + extra);
                         break;
                     case IMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:
                         statusChange(STATUS_PLAYING);
@@ -183,7 +183,7 @@ public class PlayerManager {
         portrait = getScreenOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
 
         if (!playerSupport) {
-            Logger.e("播放器不支持此设备");
+            Logger.e("player is unavailable for this device");
         }
     }
 

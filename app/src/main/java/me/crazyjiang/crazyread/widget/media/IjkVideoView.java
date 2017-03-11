@@ -259,6 +259,9 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     // REMOVED: addSubtitleSource
     // REMOVED: mPendingSubtitleTracks
 
+    /**
+     * 停止视频播放，并释放资源
+     */
     public void stopPlayback() {
         if (mMediaPlayer != null) {
             mMediaPlayer.stop();
@@ -558,6 +561,8 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     /**
      * Register a callback to be invoked when the media file
      * is loaded and ready to go.
+     * 注册一个回调函数，在视频预处理完成后调用。
+     * 在视频预处理完成后被调用。此时视频的宽度、高度、宽高比信息已经获取到，此时可调用seekTo让视频从指定位置开始播放。
      *
      * @param l The callback that will be run
      */
@@ -807,6 +812,10 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
         return isInPlaybackState() && mMediaPlayer.isPlaying();
     }
 
+    /**
+     * 获取缓冲百分比
+     * @return
+     */
     @Override
     public int getBufferPercentage() {
         if (mMediaPlayer != null) {
@@ -865,6 +874,10 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     private int mCurrentAspectRatioIndex = 0;
     private int mCurrentAspectRatio = s_allAspectRatio[mCurrentAspectRatioIndex];
 
+    /**
+     * 改变视频缩放状态
+     * @return
+     */
     public int toggleAspectRatio() {
         mCurrentAspectRatioIndex++;
         mCurrentAspectRatioIndex %= s_allAspectRatio.length;
