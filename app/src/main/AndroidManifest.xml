@@ -30,7 +30,7 @@
         </activity>
         <activity android:name=".ui.main.activity.MainActivity" />
         <activity android:name=".ui.zhihu.activity.CalendarActivity" />
-        <activity android:name=".ui.zhihu.activity.ZhiHuNewsActivity"></activity>
+        <activity android:name=".ui.zhihu.activity.ZhiHuNewsActivity" />
+        <activity android:name=".ui.netease.activity.VideoPlayerActivity" />
     </application>
-
 </manifest>

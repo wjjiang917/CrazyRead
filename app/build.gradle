@@ -82,4 +82,11 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.3.2'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.daimajia.slider:library:1.1.5@aar'
+
+    // video
+    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.7.7.1'
+    compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.7.7.1'
+    // danmu
+    compile 'com.github.ctiao:DanmakuFlameMaster:0.7.1'
+    compile 'com.github.ctiao:ndkbitmap-armv7a:0.7.1'
 }
