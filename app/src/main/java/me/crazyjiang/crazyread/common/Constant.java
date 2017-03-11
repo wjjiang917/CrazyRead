@@ -19,5 +19,6 @@ public interface Constant {
 
     // intent extra key / fragment argument bundle key
     String INTENT_EXTRA_NEWS_ID = "intent_extra_news_id";
+    String INTENT_EXTRA_VIDEO = "intent_extra_video";
     String BUNDLE_CATEGORY_ID = "bundle_category_id";
 }

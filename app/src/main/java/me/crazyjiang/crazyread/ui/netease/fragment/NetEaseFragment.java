@@ -13,13 +13,13 @@ import me.crazyjiang.crazyread.R;
 import me.crazyjiang.crazyread.common.Constant;
 import me.crazyjiang.crazyread.ui.SimpleFragment;
 import me.crazyjiang.crazyread.ui.ViewPagerAdapter;
-import me.crazyjiang.crazyread.ui.zhihu.fragment.DailyFragment;
+import me.crazyjiang.crazyread.ui.live.fragment.LiveStreamFragment;
 
 /**
  * Created by Jiangwenjin on 2017/3/8.
  */
 public class NetEaseFragment extends SimpleFragment {
-    private final String[] VIDEO_TITLE = new String[]{"热点", "搞笑", "娱乐", "精品"};
+    private final String[] VIDEO_TITLE = new String[]{"直播", "热点", "搞笑", "娱乐", "精品"};
     private final String[] CATEGORY_ID = new String[]{"V9LG4B3A0", "V9LG4E6VR", "V9LG4CHOR", "00850FRB"};
 
     @BindView(R.id.tab_netease)
@@ -38,6 +38,7 @@ public class NetEaseFragment extends SimpleFragment {
     @Override
     protected void init() {
         // init pages
+        fragments.add(new LiveStreamFragment());
         NetEaseVideosFragment fragment;
         Bundle bundle;
         for (int i = 0; i < CATEGORY_ID.length; i++) {
@@ -61,5 +62,6 @@ public class NetEaseFragment extends SimpleFragment {
         mTabLayout.getTabAt(1).setText(VIDEO_TITLE[1]);
         mTabLayout.getTabAt(2).setText(VIDEO_TITLE[2]);
         mTabLayout.getTabAt(3).setText(VIDEO_TITLE[3]);
+        mTabLayout.getTabAt(4).setText(VIDEO_TITLE[4]);
     }
 }

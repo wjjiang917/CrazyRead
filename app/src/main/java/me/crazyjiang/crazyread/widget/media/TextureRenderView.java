@@ -1,5 +1,4 @@
 /*
- * Copyright (C) 2015 Bilibili
  * Copyright (C) 2015 Zhang Rui <bbcallen@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +14,7 @@
  * limitations under the License.
  */
 
-package tv.danmaku.ijk.media.example.widget.media;
+package me.crazyjiang.crazyread.widget.media;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -212,7 +211,7 @@ public class TextureRenderView extends TextureView implements IRenderView {
 
     private SurfaceCallback mSurfaceCallback;
 
-    private static final class SurfaceCallback implements TextureView.SurfaceTextureListener, ISurfaceTextureHost {
+    private static final class SurfaceCallback implements SurfaceTextureListener, ISurfaceTextureHost {
         private SurfaceTexture mSurfaceTexture;
         private boolean mIsFormatChanged;
         private int mWidth;

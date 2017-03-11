@@ -1,5 +1,6 @@
 package me.crazyjiang.crazyread.ui.netease.fragment;
 
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,7 @@ import me.crazyjiang.crazyread.model.bean.NetEaseVideoBean;
 import me.crazyjiang.crazyread.presenter.NetEaseVideosPresenter;
 import me.crazyjiang.crazyread.presenter.contract.NetEaseVideosContract;
 import me.crazyjiang.crazyread.ui.BaseFragment;
+import me.crazyjiang.crazyread.ui.netease.activity.VideoPlayerActivity;
 import me.crazyjiang.crazyread.ui.netease.adapter.NetEaseVideosAdapter;
 
 /**
@@ -59,7 +61,9 @@ public class NetEaseVideosFragment extends BaseFragment<NetEaseVideosPresenter> 
         rvVideoList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+                Intent intent = new Intent(mContext, VideoPlayerActivity.class);
+                intent.putExtra(Constant.INTENT_EXTRA_VIDEO, mVideos.get(position));
+                mContext.startActivity(intent);
             }
         });
         mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {

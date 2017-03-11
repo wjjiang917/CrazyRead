@@ -83,9 +83,17 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.daimajia.slider:library:1.1.5@aar'
 
-    // video
+    // video-on-demand
+    compile 'fm.jiecao:jiecaovideoplayer:5.5.2'
+    // live video
     compile 'tv.danmaku.ijk.media:ijkplayer-java:0.7.7.1'
+    // ExoPlayer as IMediaPlayer: optional, experimental
+    compile 'tv.danmaku.ijk.media:ijkplayer-exo:0.7.7.1'
+    // ABIs
     compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.7.7.1'
+    compile 'tv.danmaku.ijk.media:ijkplayer-armv5:0.7.7.1'
+    compile 'tv.danmaku.ijk.media:ijkplayer-x86:0.7.7.1'
+
     // danmu
     compile 'com.github.ctiao:DanmakuFlameMaster:0.7.1'
     compile 'com.github.ctiao:ndkbitmap-armv7a:0.7.1'
